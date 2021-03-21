@@ -41,16 +41,28 @@ document.addEventListener('keydown', function (event) {
 
 piano.addEventListener('click', (event) => {
     if(event.target.classList.contains('piano-key')) {
-      const note = event.target.dataset.note;
-      const src = `assets/audio/${note}.mp3`;
-      const audio = new Audio(src);
-    audio.currentTime = 0;
-    audio.play();
-    pianoКeys.forEach((el) => {
-        if(el.classList.contains('piano-key-active')) {
-          el.classList.remove('piano-key-active');
-        }
-      });
-      event.target.classList.add('piano-key-active');
+        const note = event.target.dataset.note;
+        const src = `assets/audio/${note}.mp3`;
+        const audio = new Audio(src);
+        audio.currentTime = 0;
+        audio.play();
+        pianoКeys.forEach((el) => {
+            if(el.classList.contains('piano-key-active')) {
+                el.classList.remove('piano-key-active');
+            }
+        });
+        event.target.classList.add('piano-key-active');
     }   
-  });
+});
+
+
+//fullscreen
+
+const fullScreen = document.querySelector(".fullscreen");
+    
+fullScreen.addEventListener('click', function (turnFullScreen) {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+    } 
+    document.exitFullscreen();
+});
