@@ -14,27 +14,43 @@ const soundDB = [
 ]
 
 const piano = document.querySelector('.piano');
+//console.log(piano);
+const pianoКeys = document.querySelectorAll('.piano-key');
+//console.log(pianoКeys);
 
-window.addEventListener('keydown', function (event) {
+document.addEventListener('keydown', function (event) {
     for (let i=0; i < soundDB.length; i++) {
-        console.log(event.code);
         if (event.code === 'Key' + soundDB[i][0]) {
             const audio = new Audio(soundDB[i][2]);
             audio.currentTime = 0;
             audio.play();
         }
-        if(event.target.classList.contains('piano-key')) {
-            console.log(event.target);
-            pianoКeys.forEach((el) => {
-              if(el.classList.contains('piano-key-active')) {
-                el.classList.remove('piano-key-active');
-              }
-            });
-            event.target.classList.add('piano-key-active');
-        }
+    } 
+
+    console.log(event.target.classList);
+    if(event.target.classList.contains('piano-key')) {
+        
+        pianoКeys.forEach((el) => {
+          if(el.classList.contains('piano-key-active')) {
+            el.classList.remove('piano-key-active');
+          }
+        });
+        event.target.classList.add('piano-key-active');
     }
 });
 
-window.addEventListener('mousedown', function(e) {
-
-});
+piano.addEventListener('click', (event) => {
+    if(event.target.classList.contains('piano-key')) {
+      const note = event.target.dataset.note;
+      const src = `assets/audio/${note}.mp3`;
+      const audio = new Audio(src);
+    audio.currentTime = 0;
+    audio.play();
+    pianoКeys.forEach((el) => {
+        if(el.classList.contains('piano-key-active')) {
+          el.classList.remove('piano-key-active');
+        }
+      });
+      event.target.classList.add('piano-key-active');
+    }   
+  });
