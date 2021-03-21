@@ -13,13 +13,28 @@ const soundDB = [
 ["O", 79, "assets/audio/a♯.mp3"]
 ]
 
-window.addEventListener('keydown', function (e) {
+const piano = document.querySelector('.piano');
+
+window.addEventListener('keydown', function (event) {
     for (let i=0; i < soundDB.length; i++) {
-        if (e.keyCode === soundDB[i][1]) {
+        console.log(event.code);
+        if (event.code === 'Key' + soundDB[i][0]) {
             const audio = new Audio(soundDB[i][2]);
-            console.log(audio);
             audio.currentTime = 0;
             audio.play();
         }
+        if(event.target.classList.contains('piano-key')) {
+            console.log(event.target);
+            pianoКeys.forEach((el) => {
+              if(el.classList.contains('piano-key-active')) {
+                el.classList.remove('piano-key-active');
+              }
+            });
+            event.target.classList.add('piano-key-active');
+        }
     }
+});
+
+window.addEventListener('mousedown', function(e) {
+
 });
