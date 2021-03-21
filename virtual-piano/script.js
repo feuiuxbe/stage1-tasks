@@ -18,6 +18,8 @@ const piano = document.querySelector('.piano');
 const pianoКeys = document.querySelectorAll('.piano-key');
 //console.log(pianoКeys);
 
+// button push
+
 document.addEventListener('keydown', function (event) {
     for (let i=0; i < soundDB.length; i++) {
         if (event.code === 'Key' + soundDB[i][0]) {
@@ -38,6 +40,8 @@ document.addEventListener('keydown', function (event) {
         event.target.classList.add('piano-key-active');
     }
 });
+
+// mouse click 
 
 piano.addEventListener('click', (event) => {
     if(event.target.classList.contains('piano-key')) {
