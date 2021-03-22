@@ -18,7 +18,7 @@ const piano = document.querySelector('.piano');
 const pianoКeys = document.querySelectorAll('.piano-key');
 //console.log(pianoКeys);
 
-// button push
+// keyboard button push
 
 window.addEventListener('keydown', function (event) {
     for (let i=0; i < soundDB.length; i++) {
@@ -38,9 +38,27 @@ window.addEventListener('keydown', function (event) {
     }
 });
 
-// mouse click 
+// mouse click - was bugged with mousedown
 
-piano.addEventListener('click', (event) => {
+/* piano.addEventListener('click', (event) => {
+    if(event.target.classList.contains('piano-key')) {
+        const note = event.target.dataset.note;
+        const src = `assets/audio/${note}.mp3`;
+        const audio = new Audio(src);
+        audio.currentTime = 0;
+        audio.play();
+        pianoКeys.forEach((el) => {
+            if(el.classList.contains('piano-key-active')) {
+                el.classList.remove('piano-key-active');
+            }
+        });
+        event.target.classList.add('piano-key-active');
+    }   
+}); */
+
+// mousedown (button is pressed)
+
+piano.addEventListener('mousedown', (event) => {
     if(event.target.classList.contains('piano-key')) {
         const note = event.target.dataset.note;
         const src = `assets/audio/${note}.mp3`;
@@ -56,8 +74,7 @@ piano.addEventListener('click', (event) => {
     }   
 });
 
-
-//fullscreen
+// fullscreen
 
 const fullScreen = document.querySelector(".fullscreen");
     
@@ -67,3 +84,29 @@ fullScreen.addEventListener('click', function (turnFullScreen) {
     } 
     document.exitFullscreen();
 });
+
+// Notes - Letters buttons
+
+const lettersButton = document.querySelector(".btn-letters");
+const notesButton = document.querySelector(".btn-notes");
+
+lettersButton.addEventListener("mousedown", () => {
+    for (var i = 0; i < pianoКeys.length; i++) {
+      if (!pianoКeys[i].classList.contains("piano-key-letter")) {
+        pianoКeys[i].classList.add("piano-key-letter");
+      }
+    }
+    lettersButton.classList.add('btn-active');
+    notesButton.classList.remove('btn-active');
+});
+  
+notesButton.addEventListener("mousedown", () => {
+    for (var i = 0; i < pianoКeys.length; i++) {
+      if (pianoКeys[i].classList.contains("piano-key-letter")) {
+        pianoКeys[i].classList.remove("piano-key-letter");
+      }
+    }
+    lettersButton.classList.remove('btn-active');
+    notesButton.classList.add('btn-active');
+});
+  
