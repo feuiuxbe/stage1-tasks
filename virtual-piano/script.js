@@ -78,7 +78,7 @@ piano.addEventListener('mousedown', (event) => {
 
 const fullScreen = document.querySelector(".fullscreen");
     
-fullScreen.addEventListener('click', function (turnFullScreen) {
+fullScreen.addEventListener('click', (event) => {
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen();
     } 
@@ -90,8 +90,8 @@ fullScreen.addEventListener('click', function (turnFullScreen) {
 const lettersButton = document.querySelector(".btn-letters");
 const notesButton = document.querySelector(".btn-notes");
 
-lettersButton.addEventListener("mousedown", () => {
-    for (var i = 0; i < pianoКeys.length; i++) {
+lettersButton.addEventListener('mousedown', (event) => {
+    for (let i = 0; i < pianoКeys.length; i++) {
       if (!pianoКeys[i].classList.contains("piano-key-letter")) {
         pianoКeys[i].classList.add("piano-key-letter");
       }
@@ -100,8 +100,8 @@ lettersButton.addEventListener("mousedown", () => {
     notesButton.classList.remove('btn-active');
 });
   
-notesButton.addEventListener("mousedown", () => {
-    for (var i = 0; i < pianoКeys.length; i++) {
+notesButton.addEventListener('mousedown', (event) => {
+    for (let i = 0; i < pianoКeys.length; i++) {
       if (pianoКeys[i].classList.contains("piano-key-letter")) {
         pianoКeys[i].classList.remove("piano-key-letter");
       }
@@ -109,4 +109,34 @@ notesButton.addEventListener("mousedown", () => {
     lettersButton.classList.remove('btn-active');
     notesButton.classList.add('btn-active');
 });
-  
+
+// remove transitions
+
+
+
+
+for (let i = 0; i < pianoКeys.length; i++) {
+    
+    pianoКeys[i].addEventListener('transitionend', (event) => {
+        event.target.classList.remove('piano-key-active');
+    });
+
+
+// mouseover sound
+     pianoКeys[i].addEventListener('mouseover', (event) => {
+        if (event.buttons !== 1) return;
+        if(event.target.classList.contains('piano-key')) {
+            const note = event.target.dataset.note;
+            const src = `assets/audio/${note}.mp3`;
+            const audio = new Audio(src);
+            audio.currentTime = 0;
+            audio.play();
+            pianoКeys.forEach((el) => {
+                if(el.classList.contains('piano-key-active')) {
+                    el.classList.remove('piano-key-active');
+                }
+            });
+            event.target.classList.add('piano-key-active');
+        }
+    }); 
+}
