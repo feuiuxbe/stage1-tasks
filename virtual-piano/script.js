@@ -20,24 +20,21 @@ const pianoКeys = document.querySelectorAll('.piano-key');
 
 // button push
 
-document.addEventListener('keydown', function (event) {
+window.addEventListener('keydown', function (event) {
     for (let i=0; i < soundDB.length; i++) {
         if (event.code === 'Key' + soundDB[i][0]) {
             const audio = new Audio(soundDB[i][2]);
             audio.currentTime = 0;
             audio.play();
-        }
-    } 
+            const key = document.querySelector(`.piano-key[data-letter="${soundDB[i][0]}"]`);
+            pianoКeys.forEach((el) => {
+                if(el.classList.contains('piano-key-active')) {
+                    el.classList.remove('piano-key-active');
+                }
+                key.classList.add('piano-key-active');
+            });
 
-    console.log(event.target.classList);
-    if(event.target.classList.contains('piano-key')) {
-        
-        pianoКeys.forEach((el) => {
-          if(el.classList.contains('piano-key-active')) {
-            el.classList.remove('piano-key-active');
-          }
-        });
-        event.target.classList.add('piano-key-active');
+        }
     }
 });
 
